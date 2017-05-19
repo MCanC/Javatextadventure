@@ -7,7 +7,7 @@
  *  To play this game, create an instance of this class and call the "play"
  *  method.
  *
- *  This main class creates and initialises all the others: it creates all
+ *  This main class creates and initializes all the others: it creates all
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  *
@@ -18,13 +18,14 @@
 class Game
 {
     private Parser parser;
-    private Room currentRoom;
+    private Player player;
 
     /**
-     * Create the game and initialise its internal map.
+     * Create the game and initialize its internal map.
      */
     public Game()
     {
+    	player = new Player();
         createRooms();
         parser = new Parser();
     }
@@ -43,7 +44,7 @@ class Game
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
 
-        // initialise room exits
+        // Initialize room exits
         outside.setExit("east", theatre);
         outside.setExit("south", lab);
         outside.setExit("west", pub);
@@ -56,8 +57,7 @@ class Game
         lab.setExit("east", office);
 
         office.setExit("west", lab);
-
-        currentRoom = outside;  // start game outside
+        player.setCurrentRoom(outside);
     }
 
     /**
@@ -88,7 +88,7 @@ class Game
         System.out.println("Adventure is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getCurrentRoom().getLongDescription());
     }
 
     /**
@@ -116,7 +116,7 @@ class Game
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")){
-        	System.out.print(currentRoom.getLongDescription());
+        	System.out.print(player.getCurrentRoom().getLongDescription());
         } 
         	
         return wantToQuit;
@@ -153,20 +153,22 @@ class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
+        Room nextRoom = player.getCurrentRoom().getExit(direction);
 
         if (nextRoom == null)
             System.out.println("There is no door!");
         else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            player.setCurrentRoom(nextRoom);
+            System.out.println();
+            System.out.println(player.getCurrentRoom().getLongDescription());
+            
         }
     }
 
     /**
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game. Return true, if this command
-     * quits the game, false otherwise.
+     * quits the game, false otherwise
      */
     private boolean quit(Command command)
     {
