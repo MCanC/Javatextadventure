@@ -35,7 +35,7 @@ class Game
      */
     private void createRooms()
     {
-        Room outside, theatre, pub, lab, office;
+        Room outside, theatre, pub, lab, office, attic;
 
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -43,6 +43,8 @@ class Game
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        attic = new Room("in an attic with slaves");
+
 
         // Initialize room exits
         outside.setExit("east", theatre);
@@ -52,6 +54,10 @@ class Game
         theatre.setExit("west", outside);
 
         pub.setExit("east", outside);
+        pub.setExit("up", attic);
+        
+        attic.setExit("down", pub);
+        
 
         lab.setExit("north", outside);
         lab.setExit("east", office);
@@ -59,6 +65,10 @@ class Game
         office.setExit("west", lab);
         player.setCurrentRoom(outside);
     }
+    
+   /* private void createFloors()
+    {
+    }*/
 
     /**
      *  Main play routine.  Loops until end of play.
@@ -84,8 +94,8 @@ class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to Adventure!");
-        System.out.println("Adventure is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the adventure of textworld");
+        System.out.println(".");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println(player.getCurrentRoom().getLongDescription());
@@ -110,7 +120,7 @@ class Game
             printHelp();
         }
         else if (commandWord.equals("go")){
-            goRoom(command);
+            goToRoom(command);
         }
         else if (commandWord.equals("quit")){
             wantToQuit = quit(command);
@@ -137,33 +147,15 @@ class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
+    
+    private void goToRoom(Command command) {
+    	player.goRoom(command);
+    }
 
     /**
      * Try to go to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
-    private void goRoom(Command command)
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = player.getCurrentRoom().getExit(direction);
-
-        if (nextRoom == null)
-            System.out.println("There is no door!");
-        else {
-            player.setCurrentRoom(nextRoom);
-            System.out.println();
-            System.out.println(player.getCurrentRoom().getLongDescription());
-            
-        }
-    }
 
     /**
      * "Quit" was entered. Check the rest of the command to see
