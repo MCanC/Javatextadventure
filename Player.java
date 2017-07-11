@@ -4,10 +4,12 @@ public class Player {
 	private Room currentRoom;
 	private int maxhealth;
 	private int currhealth;
+	private Inventory inventory;
 	
 	public Player(){
-		maxhealth = 10;
+		maxhealth = 50;
 		currhealth = maxhealth;
+		inventory = new Inventory();
 	}
 	public void damage(int dmg){
 		if (currhealth - dmg <= 0){
@@ -34,9 +36,11 @@ public class Player {
 	public Room getCurrentRoom() {
 		return currentRoom;
 	}
-
 	public void setCurrentRoom(Room currentRoom) {
 		this.currentRoom = currentRoom;
+	}
+	public boolean take(Items item) {
+		return inventory.addItem(item);
 	}
 	
 	 public void goRoom(Command command)
@@ -64,4 +68,7 @@ public class Player {
 	            
 	        }
 	    }
+	public Items takeItem(String itemName) {
+		return inventory.takeItem(itemName);
+	}
 }
