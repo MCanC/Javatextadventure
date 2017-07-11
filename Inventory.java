@@ -2,16 +2,16 @@ import java.util.*;
 
 public class Inventory {
 	
-	private ArrayList<Items> itemList;
-	private Items item;
+	private ArrayList<Item> itemList;
+	private Item item;
 	private int maxWeight;
 
  public Inventory() {
-	 itemList = new ArrayList<Items>();
+	 itemList = new ArrayList<Item>();
      maxWeight = 10;
  }
  
- public boolean addItem(Items item) {
+ public boolean addItem(Item item) {
 	 if (getCurrWeight() + item.getWeight() > maxWeight) {
 		
 		 return false;
@@ -20,9 +20,9 @@ public class Inventory {
 	 return true;
  }
  
- public Items takeItem(String itemName) {
-	 Items item = null;
-	 for (Items items : itemList) {
+ public Item takeItem(String itemName) {
+	 Item item = null;
+	 for (Item items : itemList) {
 		if (items.getName().equalsIgnoreCase(itemName)) {
 			item = items;
 			break;
@@ -35,7 +35,7 @@ public class Inventory {
   }
 
 public void showItems() {
-	for (Items items : itemList) {
+	for (Item items : itemList) {
 		System.out.println(items.getName());
 	}
 	
@@ -47,7 +47,7 @@ public boolean isInventoryEmpty() {
 
 public int getCurrWeight() {
 	int total = 0;
-	for (Items items : itemList) {
+	for (Item items : itemList) {
 		total += items.getWeight();
 	}
 	return total;

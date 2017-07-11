@@ -19,7 +19,7 @@ class Game
 {
     private Parser parser;
     private Player player;
-    private Items torch, key, potion, chest, cigar;
+    private Item torch, key, potion, chest, cigar;
     private Inventory inv;
 
     /**
@@ -85,11 +85,11 @@ class Game
     
     private void createItems()
     {
-    	torch = new Items("torch","You can use this torch to light up the area",3);
-    	key = new Items("key","A key, maybe you'll need it",3);
-    	potion = new Items("potion","A health potion, i'm sure you'll need that",3);
-    	chest = new Items ("chest","A chest? I think you found the treasure!",3);
-    	cigar = new Items("cigar","A cigar, Do you smoke?",1);
+    	torch = new Item("torch","You can use this torch to light up the area",3);
+    	key = new Item("key","A key, maybe you'll need it",3);
+    	potion = new Item("potion","A health potion, i'm sure you'll need that",3);
+    	chest = new Item ("chest","A chest? I think you found the treasure!",3);
+    	cigar = new Item("cigar","A cigar, Do you smoke?",1);
     }
 
     /**
@@ -158,7 +158,7 @@ class Game
         }
         else if (commandWord.equals("drop")){
         	if (command.hasSecondWord()) {
-        		Items item = player.takeItem(command.getSecondWord());
+        		Item item = player.takeItem(command.getSecondWord());
         		if (item != null) {
         			player.getCurrentRoom().addItem(item);
         			System.out.println("You dropped: "+ item.getName());
@@ -169,7 +169,7 @@ class Game
         }	
         else if (commandWord.equals("take")) {
         	if (command.hasSecondWord()) {
-        		Items item = player.getCurrentRoom().takeItem(command.getSecondWord());
+        		Item item = player.getCurrentRoom().takeItem(command.getSecondWord());
         		if (item != null) {
         			if(player.take(item)) {
         				System.out.println("You picked up: "+ item.getName());

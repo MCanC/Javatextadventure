@@ -83,11 +83,11 @@ class Room
         return (Room)exits.get(direction);
     }
 
-	public Items takeItem(String itemName) {
+	public Item takeItem(String itemName) {
 		return inv.takeItem(itemName);
 	}
 
-	public void addItem(Items item) {
+	public void addItem(Item item) {
 		inv.addItem(item);
 	}
 

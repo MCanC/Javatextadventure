@@ -39,7 +39,7 @@ public class Player {
 	public void setCurrentRoom(Room currentRoom) {
 		this.currentRoom = currentRoom;
 	}
-	public boolean take(Items item) {
+	public boolean take(Item item) {
 		return inventory.addItem(item);
 	}
 	
@@ -68,7 +68,7 @@ public class Player {
 	            
 	        }
 	    }
-	public Items takeItem(String itemName) {
+	public Item takeItem(String itemName) {
 		return inventory.takeItem(itemName);
 	}
 }
